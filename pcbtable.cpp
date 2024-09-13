@@ -16,7 +16,7 @@
  */
 PCBTable::PCBTable(int size) {
    // TODO: add your code here
-   this->PCBTable_ = new PCB[size];
+   this->PCBTable_ = new PCB*[size];
 }
 
 /**
@@ -38,13 +38,13 @@ PCBTable::~PCBTable() {
 PCB* PCBTable::getPCB(unsigned int idx) {
     // TODO: add your code here
 
-    //iterats until PCB at given index is found IMPLIMENT IDX CHECK
+    //iterates until PCB at given index is found IMPLIMENT IDX CHECK
     for(int i = 0; i <= idx; i++){
         if(i != idx){
             PCBTable_++;
         }
     }
-    return PCBTable_;
+    return *PCBTable_;
 }
 
 /**
@@ -56,8 +56,11 @@ void PCBTable::addPCB(PCB *pcb, unsigned int idx) {
     // TODO: add your code here
     // Add a PCB pointer to the PCBTable at index idx.
 
-    *pcb = PCBTable_[0];
+    //Adds the PCB pointer to its index spot in the array 
+    PCBTable_[idx] = pcb;
 
+
+    /* LEGACY CODE
     for(int i = 0; i <= idx; i++){
         if(i == idx){
             //assigns the pointer to the given spot in the array
@@ -66,5 +69,5 @@ void PCBTable::addPCB(PCB *pcb, unsigned int idx) {
             i++;
         }
     }
-
+    */
 }
