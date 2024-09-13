@@ -22,7 +22,8 @@ private:
     // choose a data structure for the PCBTable. 
     // You can use an array of PCB pointers, e.g. vector<PCB *>. 
 
-    PCB* PCBTable_;
+    //Array of PCB pointers
+    PCB** PCBTable_;
 
 
 public:
