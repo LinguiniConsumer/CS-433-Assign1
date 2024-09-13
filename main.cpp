@@ -4,12 +4,20 @@
 
 using namespace std;
 
+/* COMMAND FOR TERMINAL
+
+g++ main.cpp
+./a.out
+
+*/ 
+
 int main(){
     cout << "hello woqqrld!" << endl;
 
     PCB joe;
-    PCBTable table;
-    PCB* pointy;
+
+    //PCBTable table;
+    //PCB* pointy;
 
     joe.display();
 
@@ -18,7 +26,7 @@ int main(){
     joe.display();
 
 
-    table.addPCB(pointy,0);
+    //table.addPCB(pointy,0);
 
     return 0;
 }
