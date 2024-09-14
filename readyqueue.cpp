@@ -1,85 +1,76 @@
 /**
  * Assignment 1: priority queue of processes
- * @file readyqueue.h
+ * @file pcbtable.cpp
  * @author ??? (TODO: your name)
- * @brief ReadyQueue is a queue of PCB's that are in the READY state to be scheduled to run.
- * It should be a priority queue such that the process with the highest priority can be selected next.
- * @version 0.1
+ * @brief This is the implementation file for the PCBTable class.
+ * //You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
+ * // Remember to add sufficient comments to your code
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient comments to your code
-#pragma once
 
-#include "pcb.h"
+#include "pcbtable.h"
 
 /**
- * @brief A queue of PCB's that are in the READY state to be scheduled to run.
- * It should be a priority queue such that the process with the highest priority can be selected next.
+ * @brief Construct a new PCBTable object of the given size (number of PCBs)
+ *
+ * @param size: the capacity of the PCBTable
  */
-class ReadyQueue {
-private:
-    // TODO: add your private member variables here
-    // choose a data structure for the ReadyQueue. No STL class is allowed.
+PCBTable::PCBTable(int size) {
+   // TODO: add your code here
+   this->PCBTable_ = new PCB*[size];
+}
+
+/**
+ * @brief Destroy the PCBTable object. Make sure to delete all the PCBs in the table.
+ *
+ */
+PCBTable::~PCBTable() {
+   // TODO: add your code here
+   // Delete all the PCBs in the table
+   delete[] this->PCBTable_;
+}
+
+/**
+ * @brief Get the PCB at index "idx" of the PCBTable.
+ *
+ * @param idx: the index of the PCB to get
+ * @return PCB*: pointer to the PCB at index "idx"
+ */
+PCB* PCBTable::getPCB(unsigned int idx) {
+    // TODO: add your code here
+    return PCBTable_[idx];
+
+    /*LEGACY CODE
+    //iterates until PCB at given index is found IMPLIMENT IDX CHECK
+    for(int i = 0; i <= idx; i++){
+        if(i != idx){
+            PCBTable_++;
+        }
+    }
+    return *PCBTable_;
+    */
+}
+
+/**
+ * @brief Add a PCB pointer to the PCBTable at index idx.
+ *
+ * @param pcb: the PCB to add
+ */
+void PCBTable::addPCB(PCB *pcb, unsigned int idx) {
+    // TODO: add your code here
+    // Add a PCB pointer to the PCBTable at index idx.
+
+    //Adds the PCB pointer to its index spot in the array 
+    PCBTable_[idx] = pcb;
 
 
-    //maxheap?
-    //PCB* PCB
-    PCB** PCBQueue_;
-    //vector<PCB*>;
-    int numElem_;
-    int cap_;
-
-public:
-    /**
-     * @brief Construct a new ReadyQueue object
-     *
-     */
-    ReadyQueue();
-
-    /**
-     * @brief Destructor
-     */
-    ~ReadyQueue();
-
-    // Additional Functions
-
-
-	// You may add additional member functions, but don't change the definitions of the following four member functions.
-
-    /**
-     * @brief Add a PCB representing a process into the ready queue.
-     *
-     * @param pcbPtr: the pointer to the PCB to be added
-     */
-	void addPCB(PCB* pcbPtr);
-
-    /**
-     * @brief Remove and return the PCB with the highest priority from the queue
-     *
-     * @return PCB*: the pointer to the PCB with the highest priority
-     */
-	PCB* removePCB();
-
-    /**
-     * @brief Returns the number of elements in the queue.
-     *
-     * @return int: the number of PCBs in the queue
-     */
-	int size();
-
-     /**
-      * @brief Display the PCBs in the queue.
-      */
-	void displayAll();
-
-
-
-    //==================NEW FUNCTIONS===================
-
-    int leftChild(int index);
-    int rightChild(int index);
-    //function which 
-    void percolateDown(int index);
-    void percolateUp(int index);
-
-};
+    /* LEGACY CODE
+    for(int i = 0; i <= idx; i++){
+        if(i == idx){
+            //assigns the pointer to the given spot in the array
+            *pcb = PCBTable_[i];
+        } else{
+            i++;
+        }
+    }
+    */
+}
