@@ -1,183 +1,85 @@
-#include <iostream>
-#include "readyqueue.h"
-
-using namespace std;
-
+/**
+ * Assignment 1: priority queue of processes
+ * @file readyqueue.h
+ * @author ??? (TODO: your name)
+ * @brief ReadyQueue is a queue of PCB's that are in the READY state to be scheduled to run.
+ * It should be a priority queue such that the process with the highest priority can be selected next.
+ * @version 0.1
+ */
 //You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
 // Remember to add sufficient comments to your code
+#pragma once
 
+#include "pcb.h"
 
 /**
- * @brief Constructor for the ReadyQueue class.
+ * @brief A queue of PCB's that are in the READY state to be scheduled to run.
+ * It should be a priority queue such that the process with the highest priority can be selected next.
  */
- ReadyQueue::ReadyQueue()  {
-    //TODO: add your code here
-    this->PCBQueue_ = new PCB*[100];
-    this->numElem_ = 0;
- }
-
-/**
- *@brief Destructor
-*/
-ReadyQueue::~ReadyQueue() {
-    //TODO: add your code to release dynamically allocate memory
-    delete[] this->PCBQueue_;
-}
-
-/**
- * @brief Add a PCB representing a process into the ready queue.
- *
- * @param pcbPtr: the pointer to the PCB to be added
- */
-void ReadyQueue::addPCB(PCB *pcbPtr) {
-    //TODO: add your code here
-    // When adding a PCB to the queue, you must change its state to READY.
-    // resize the Heap array if neccessary and insert the value into the heap.
-    // percolate the Heap to rearange after the value is inserted
-
-    //To large, resizes
-    if (numElem_ == cap_) {
-        cap_ = cap_ * 2 + 1;
-    }
-
-  //Empty
-  else if (this->numElem_ == 0) {
-    //inserts value into first position
-    PCBQueue_[0] = pcbPtr;
-    numElem_++;
-    return; 
-  }
-
-  //all other cases: simply uses percolate up to insert value in proper place
-  else{
-    //sets new element after the last element
-    PCBQueue_[numElem_] = pcbPtr;
-    percolateUp(numElem_);
-    numElem_++;
-  }
+class ReadyQueue {
+private:
+    // TODO: add your private member variables here
+    // choose a data structure for the ReadyQueue. No STL class is allowed.
 
 
-    /*LEGACY CODE
-    if(this->numElem_ > this->rear_){
-        this->rear_++;
-    }
-    else if(this->numElem_ == this->rear_){
-        this->rear_ = 0;
-    }
+    //maxheap?
+    //PCB* PCB
+    PCB** PCBQueue_;
+    //vector<PCB*>;
+    int numElem_;
+    int cap_;
 
-    //assigns pointer to this new element ??
-    PCBQueue_[this->rear_] = *pcbPtr;
-    PCBQueue_[this->rear_].setState(ProcState::READY);
-    */
-}
-
-/**
- * @brief Remove and return the PCB with the highest priority from the queue
- *
- * @return PCB*: the pointer to the PCB with the highest priority
- */
-PCB* ReadyQueue::removePCB() {
-    //TODO: add your code here
-    // When removing a PCB from the queue, you must change its state to RUNNING.
-    return PCBQueue_[0];
-
-    /*
-    cout << "S!" << endl;
-    if(this->front_ == -1){
-        return NULL;
-    }
-
-    if(this->front_ == this->rear_){
-        this->front_ = this->rear_ = -1;
-    } else{
-        this->rear_--;
-        this->numElem_--;
-    }
-    */
-}
-
-/**
- * @brief Returns the number of elements in the queue.
- *
- * @return int: the number of PCBs in the queue
- */
-int ReadyQueue::size() {
-    //TODO: add your code here
-    return this->numElem_;
-}
-
-/**
- * @brief Display the PCBs in the queue.
- */
-void ReadyQueue::displayAll() {
-    //TODO: add your code here
-    cout << "B!" << endl;
-}
-
-
-
-//==================NEW FUNCTIONS===================
-
-  // Helper functions.
+public:
     /**
-     * @brief Returns the left child of the node at index
+     * @brief Construct a new ReadyQueue object
+     *
      */
-int  ReadyQueue::leftChild(int index)
-    {
-        return 2 * index + 1;
-    }
+    ReadyQueue();
+
     /**
-     * @brief Returns the right child of the node at index
+     * @brief Destructor
      */
-    int  ReadyQueue::rightChild(int index)
-    {
-        return 2 * index + 2;
-    };
+    ~ReadyQueue();
 
-void ReadyQueue::percolateDown(int index) {
-    //check the values at index in the heap and decide whether they need to be swapped.
-    // Run recursively until the current node is bigger than its children
-
-  //sets local variables left,right to the index of the left and right child
-  int left = leftChild(index);
-  int right = rightChild(index);
-
-  //local varaible denoting the node which after searching will be bigger than its children
-  int biggest = index;
-
-  //checks first if the left index is within range
-  //checks for biggest value on leftChild
-  if(numElem_ > left && PCBQueue_[index] < PCBQueue_[left]){
-    biggest = left;
-  }
-
-  //checks for biggest value on rightChild
-  if(numElem_ > right && PCBQueue_[index] < PCBQueue_[right]){
-    biggest = right;
-  }
-
-  //RECURSIVE CALL
-  if(index != biggest){
-    swap(biggest, index);
-    percolateDown(biggest);
-  }
-}
-
-void ReadyQueue::percolateUp(int index) {
-  // check the value of the parents of index in the heap and swap them if they are smaller
-    // run recursively until the current node is small than its parent
-    int cur_parent = (index - 1) / 2;
-    int new_parent = cur_parent;
+    // Additional Functions
 
 
-  //BASE CASE
-    if (index == 0) {
-        return;
-    }
+	// You may add additional member functions, but don't change the definitions of the following four member functions.
 
-  //recursively runs while the current node is greater than its parent
-  if(PCBQueue_[index] > PCBQueue_[cur_parent]){
-    swap(cur_parent, index);
-    percolateUp(new_parent);
-  }
-}
+    /**
+     * @brief Add a PCB representing a process into the ready queue.
+     *
+     * @param pcbPtr: the pointer to the PCB to be added
+     */
+	void addPCB(PCB* pcbPtr);
+
+    /**
+     * @brief Remove and return the PCB with the highest priority from the queue
+     *
+     * @return PCB*: the pointer to the PCB with the highest priority
+     */
+	PCB* removePCB();
+
+    /**
+     * @brief Returns the number of elements in the queue.
+     *
+     * @return int: the number of PCBs in the queue
+     */
+	int size();
+
+     /**
+      * @brief Display the PCBs in the queue.
+      */
+	void displayAll();
+
+
+
+    //==================NEW FUNCTIONS===================
+
+    int leftChild(int index);
+    int rightChild(int index);
+    //function which 
+    void percolateDown(int index);
+    void percolateUp(int index);
+
+};
