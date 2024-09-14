@@ -111,7 +111,12 @@ int ReadyQueue::size() {
  */
 void ReadyQueue::displayAll() {
     //TODO: add your code here
-    cout << "B!" << endl;
+    for(int i = 0; i < numElem_; i++){
+        cout << PCBQueue_[i]->getID() << endl;
+        cout << PCBQueue_[i]->getPriority() << endl;
+        //cout << PCBQueue_[i]->getState() << endl;
+    }
+
 }
 
 
@@ -147,12 +152,12 @@ void ReadyQueue::percolateDown(int index) {
 
   //checks first if the left index is within range
   //checks for biggest value on leftChild
-  if(numElem_ > left && PCBQueue_[index] < PCBQueue_[left]){
+  if(numElem_ > left && PCBQueue_[index]->getPriority() < PCBQueue_[left]->getPriority()){
     biggest = left;
   }
 
   //checks for biggest value on rightChild
-  if(numElem_ > right && PCBQueue_[index] < PCBQueue_[right]){
+  if(numElem_ > right && PCBQueue_[index]->getPriority() < PCBQueue_[right]->getPriority()){
     biggest = right;
   }
 
@@ -176,7 +181,7 @@ void ReadyQueue::percolateUp(int index) {
     }
 
   //recursively runs while the current node is greater than its parent
-  if(PCBQueue_[index] > PCBQueue_[cur_parent]){
+  if(PCBQueue_[index]->getPriority() > PCBQueue_[cur_parent]->getPriority()){
     swap(cur_parent, index);
     percolateUp(new_parent);
   }
