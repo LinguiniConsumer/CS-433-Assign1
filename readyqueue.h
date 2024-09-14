@@ -20,10 +20,14 @@ class ReadyQueue {
 private:
     // TODO: add your private member variables here
     // choose a data structure for the ReadyQueue. No STL class is allowed.
-    PCB* PCBQueue_;
+
+
+    //maxheap?
+    //PCB* PCB
+    PCB** PCBQueue_;
+    //vector<PCB*>;
     int numElem_;
-    int front_;
-    int rear_;
+    int cap_;
 
 public:
     /**
@@ -36,6 +40,9 @@ public:
      * @brief Destructor
      */
     ~ReadyQueue();
+
+    // Additional Functions
+
 
 	// You may add additional member functions, but don't change the definitions of the following four member functions.
 
@@ -64,5 +71,15 @@ public:
       * @brief Display the PCBs in the queue.
       */
 	void displayAll();
+
+
+
+    //==================NEW FUNCTIONS===================
+
+    int leftChild(int index);
+    int rightChild(int index);
+    //function which 
+    void percolateDown(int index);
+    void percolateUp(int index);
 
 };
